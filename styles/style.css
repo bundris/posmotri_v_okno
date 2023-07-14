@@ -1,9 +1,8 @@
-@import url(../fonts/fonts.css);
-
 :root {
   --gray: #545050;
   --black: #1B1919;
   --white: #FFF;
+  --transparent-white: rgba(255, 255, 255, 0.70);
 }
 
 *,
@@ -26,7 +25,7 @@ html {
   color: var(--white);
   font-family: 'Fira Sans Condensed', sans-serif;
   font-size: 18px;
-  background-color: #1b1919;
+  background-color: var(--black);
 }
 
 h1,
@@ -56,6 +55,8 @@ ol {
   padding: 0;
   border: 0;
   clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
   overflow: hidden;
 }
 
@@ -65,8 +66,8 @@ ol {
   background-color: transparent;
   color: var(--white);
   text-align: center;
-  font-family: Fira Sans Condensed, serif;
-  font-size: 18px;
+  font-family: inherit;
+  font-size: inherit;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -89,16 +90,19 @@ ol {
 
 .button:focus-visible {
   outline: 1px solid var(--white);
+  outline-offset:1px;
 }
 
 .result {
-  width: 711px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .result__video-container {
   position: relative;
-  inline-size: 100%;
-  padding-block-end: 16px;
+  inline-size: 711px;
+  block-size: 386px;
 }
 
 .result__video {
@@ -106,18 +110,6 @@ ol {
   height: 100%;
   object-fit: cover;
   object-position: center;
-}
-
-.result__video::placeholder {
-  content: "нет подходящих видео =(";
-  place-self: center;
-  background-color: var(--gray);
-  font-family: Oswald, serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 110%;
-  text-transform: uppercase;
 }
 
 .search-form {
@@ -130,12 +122,15 @@ ol {
 
 
 .search-form__fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   border: 0;
 }
 
 .search-form__textfield {
   appearance: none;
-  color: rgb(255, 255, 255, 70%);
+  color: var(--transparent-white);
   font-family: Fira Sans Condensed, serif;
   font-size: 18px;
   font-style: normal;
@@ -143,8 +138,8 @@ ol {
   line-height: normal;
 
   background-color: transparent;
-  inline-size: 225px;
-  block-size: 27px;
+  min-inline-size: 225px;
+  min-block-size: 27px;
   border-inline-start: 0;
   border-inline-end: 0;
   border-block-start: 1px solid var(--white);
@@ -161,7 +156,7 @@ ol {
 }
 
 .search-form__textfield::placeholder {
-  color: rgb(255, 255, 255, 70%);
+  color: var(--transparent-white);
   font-family: Fira Sans Condensed, serif;
   font-size: 18px;
   font-style: normal;
@@ -176,11 +171,13 @@ ol {
   font-weight: 400;
   line-height: normal;
   color: var(--white);
-  margin-block-end: 5px;
 }
 
 .search-form__label {
-  position:relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
   line-height: 27px;
   width: fit-content;
 }
@@ -190,14 +187,10 @@ ol {
 }
 
 .search-form__pseudo-checkbox {
-  display: inline-block;
-  margin-inline-end: 5px;
   border:1px solid var(--white);
   background-color: transparent;
   inline-size: 19px;
   block-size: 19px;
-  position: relative;
-  inset-block-start: 3px;
 }
 
 .search-form__checkbox:checked + .search-form__pseudo-checkbox::before,
@@ -250,7 +243,7 @@ ol {
   gap: 26px;
 }
 
-.content__details > .title {
+.title {
   font-family: Oswald, serif;
   font-size: 75px;
   font-style: normal;
@@ -267,10 +260,19 @@ ol {
   flex-direction: row;
   justify-content: space-between;
   color: var(--white);
+  padding: 2px;
 }
 
-.content__video-card:hover {
+.content__card-link:hover {
   text-decoration: underline;
+}
+
+.content__card-link:hover .content__video-card-title {
+  border-bottom: 2px solid var(--white);
+}
+
+.content__card-link:hover .content__video-card-description {
+  border-bottom: 1px solid var(--white);
 }
 
 .content__video-card:active {
@@ -280,6 +282,7 @@ ol {
 
 .content__card-link {
   margin: 2px;
+  color: var(--white);
   display: block;
   text-decoration: none;
 }
@@ -288,8 +291,12 @@ ol {
   outline: none;
 }
 
-.content__card-link:focus {
+.content__card-link:focus-visible {
   outline: 1px solid var(--white);
+}
+
+.content__card-link_current {
+  background-color: var(--gray);
 }
 
 .content__video-card-description-container {
@@ -307,15 +314,16 @@ ol {
 }
 
 .content__video-card-description {
-  line-height: 110%;
+  line-height: 16.2px;
 }
 
 .content__video-card-thumbnail {
-  inline-size: 194px;
+  min-inline-size: 194px;
+  block-size: 103px;
   object-fit: cover;
   object-position: center;
 }
 
 .more-button {
-  width: 100%;
+  inline-size: 100%;
 }
